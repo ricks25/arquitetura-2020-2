@@ -8,6 +8,8 @@ import com.thalesdeluca.contents.PotassiumContent;
 import com.thalesdeluca.contents.SulfurContent;
 import com.thalesdeluca.enums.GroundTexture;
 import com.thalesdeluca.enums.Metric;
+import com.thalesdeluca.enums.PhosphorSource;
+import java.util.Map;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -64,7 +66,7 @@ public class Testes4 {
       assertEquals(58.49,
           CTCEquilibriumCorrection.getVPercentual(CTCEquilibriumCorrection.getSCmol(0.15, 5.76, 1.63),
               CTCEquilibriumCorrection.getCTCCmol(0.15, 5.76, 1.63, 5.35)),
-          0);
+          0.1);
     }
 
     @Test
@@ -75,6 +77,31 @@ public class Testes4 {
     @Test
     public void testeCarbono() {
       assertEquals(17.84, CTCEquilibriumCorrection.getCarbon(CTCEquilibriumCorrection.getMOPercentual(30.7)),
-          0.00001);
+          0.1);
+    }
+    
+    @Test
+    public void testeGetResiduals() {
+        PhosphorContent content = new PhosphorContent("Fósforo", Metric.MGDM, 8.59f);
+        Map<String, Double> results = PhosphorCorrection.getResiduals(PhosphorSource.SIMPLE_SUPERPHOSPHATE, 12, 70,
+            content);
+
+        assertEquals(12.4, results.get("Enxofre"), 0.01);
+        assertEquals(34.7, results.get("CÁLCIO"), 0.01);
+    }
+    
+    @Test
+    public void testeGetKgHectare() {
+        PhosphorContent content = new PhosphorContent("Fósforo", Metric.MGDM, 8.59f);
+        
+        assertEquals(123.95, PhosphorCorrection.getKgHectare(PhosphorSource.SIMPLE_SUPERPHOSPHATE, 12, 70, content), 0.01);
+    }
+
+    @Test
+    public void testeGetCost() {
+    PhosphorContent content = new PhosphorContent("Fósforo", Metric.MGDM, 8.59f);
+    double result = PhosphorCorrection.getCost(PhosphorSource.SIMPLE_SUPERPHOSPHATE, 1260f, 12f, 70f, content);
+
+    assertEquals(156.18, result, 0.01);
     }
 }

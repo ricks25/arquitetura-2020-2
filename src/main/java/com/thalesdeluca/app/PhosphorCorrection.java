@@ -65,7 +65,18 @@ public class PhosphorCorrection {
       return 0;
     }
   }
-
+  
+  public static double getKgHectare(PhosphorSource source, double contentDesired, double efficiency,
+        PhosphorContent content){
+        double needToAdd = contentDesired - content.getOnGround();
+        double baseMgdm = needToAdd < 0.01 ? 0 : needToAdd;
+        double kgka = baseMgdm * 2;
+        double p2o5 = kgka * 2.29;
+        double p2o5WithEfficiency = p2o5 * 100.0 / (efficiency / 100.0) / 100.0;
+        double kgHectare = (p2o5WithEfficiency * 100.0) / getSourceContent(source);
+    
+        return kgHectare;
+  }
   public static Map<String, Double> getResiduals(PhosphorSource source, double contentDesired, double efficiency,
       PhosphorContent content) {
     double[] values = new double[MAX_RESIDUALS];
