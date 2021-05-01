@@ -66,7 +66,7 @@ public class PhosphorCorrection {
     }
   }
   
-  public static double getKgHectare(PhosphorSource source, double contentDesired, double efficiency,
+  public static double getToBeApplied(PhosphorSource source, double contentDesired, double efficiency,
         PhosphorContent content){
         double needToAdd = contentDesired - content.getOnGround();
         double baseMgdm = needToAdd < 0.01 ? 0 : needToAdd;

@@ -9,6 +9,7 @@ import com.thalesdeluca.contents.SulfurContent;
 import com.thalesdeluca.enums.GroundTexture;
 import com.thalesdeluca.enums.Metric;
 import com.thalesdeluca.enums.PhosphorSource;
+import com.thalesdeluca.enums.PotassiumSource;
 import java.util.Map;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -91,17 +92,45 @@ public class Testes4 {
     }
     
     @Test
-    public void testeGetKgHectare() {
+    public void testeGetToBeAppliedPhosphor() {
         PhosphorContent content = new PhosphorContent("Fósforo", Metric.MGDM, 8.59f);
         
-        assertEquals(123.95, PhosphorCorrection.getKgHectare(PhosphorSource.SIMPLE_SUPERPHOSPHATE, 12, 70, content), 0.01);
+        assertEquals(123.95, PhosphorCorrection.getToBeApplied(PhosphorSource.SIMPLE_SUPERPHOSPHATE, 12, 70, content), 0.01);
     }
 
     @Test
-    public void testeGetCost() {
+    public void testeGetCostPhosphor() {
     PhosphorContent content = new PhosphorContent("Fósforo", Metric.MGDM, 8.59f);
     double result = PhosphorCorrection.getCost(PhosphorSource.SIMPLE_SUPERPHOSPHATE, 1260f, 12f, 70f, content);
 
     assertEquals(156.18, result, 0.01);
+    }
+    
+    @Test
+    public void testeGetActualPotassiumSoilCTC() {
+        assertEquals(1.2,
+        PotassiumCorrection.getActualPotassiumSoilCTC(new PotassiumContent("Potássio", Metric.CMOL, 0.15f), 3), 0.05);
+    }
+
+  @Test
+    public void testeGetPostCorrectionPotassiumCTC() {
+        assertEquals(3, PotassiumCorrection.getPostCorrectionPotassiumCTC(3), 0);
+    }
+
+  @Test
+    public void testeGetIdealPotassiumCTC() {
+        assertEquals(3, PotassiumCorrection.getIdealPotassiumCTC(GroundTexture.CLAYISH), 0);
+    }
+
+  @Test
+    public void testeGetToBeAppliedPotassium() {
+      assertEquals(450.55, PotassiumCorrection.getToBeApplied(PotassiumSource.POTASSIUM_CHLORIDE, 85, 3,
+          new PotassiumContent("Potássio", Metric.CMOL, 0.15f)), 0.01);
+    }
+
+  @Test
+    public void testeGetCostPotassium() {
+        assertEquals(1126.37, PotassiumCorrection.getCost(PotassiumSource.POTASSIUM_CHLORIDE, 85, 3,
+            new PotassiumContent("Potássio", Metric.CMOL, 0.15f), 2500), 0.01);
     }
 }
