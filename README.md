@@ -22,3 +22,5 @@ Java                            16            134              0            425
 SUM:                            16            134              0            425
 -------------------------------------------------------------------------------
 ```
+
+A dificuldade foi o entendimento inicial do código devido a grande quantidade de classes e a falta de um método que retornasse a quantidade a aplicar no quadro de correção de fósforo, mas após o entedimento do código não encontrei mais problemas.
